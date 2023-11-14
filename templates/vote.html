@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+{% load home_extras %}
+{% block content %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+      
+            justify-content: center;
+            align-items: center;
+
+            margin: 0;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 15px;
+            position: relative;
+
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #voting-container {
+            
+            margin:auto;
+            margin-top:20px;
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        }
+
+        #user-info-card {
+            border: 2px solid rgb(24, 172, 36);
+            border-radius: 5px;
+            margin: auto;
+            text-align: center;
+            
+            max-width: 400px;
+            width: 30%;
+            padding: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #candidate-list {
+
+            width: 65%;
+            height: 100%;
+            padding: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        
+           
+        }
+
+        #user-photo {
+            max-width: 50%;
+            border-radius: 50%;
+        }
+
+        .candidate-position {
+            margin-bottom: 10px;
+        }
+
+        .vote-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .position-table{
+            border-collapse: collapse;
+   
+            
+        
+            
+        }
+
+        .info{
+
+            width: 80%;
+            margin: auto;
+            text-align: left;
+        }
+        th,td{
+            padding: 8px;
+         
+        }
+        .position-row{
+            
+
+            padding-bottom: 60px;
+            
+        }
+
+        .position-row th,td{
+            padding-bottom: 20px;
+            width: 100%;
+            justify-content: space-between;
+          
+            
+            
+        }
+        th{
+            text-align: left;
+        }
+
+        button{
+            width: 100px;
+            height: 30px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+        button:hover{
+            cursor: pointer;
+        }
+        .info table tr td,th{
+            padding-bottom: 4px;
+            border: none;
+            background-color: none;
+        }
+
+
+    </style>
+
+    <div id="voting-container">
+        <div id="user-info-card">
+            <img id="user-photo" src="https://www.rcemlearning.org/wp-content/uploads/blank-user-icon-image.jpg" alt="User Photo">
+            <h2>{{user.first_name}} {{user.last_name}}</h2>
+            <div class="info">
+
+                <table>
+
+                   
+                        <tr>
+                            <th>
+                                Phone: 
+                            </th>
+                            <td>
+                                {{user.phone}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                State: 
+                            </th>
+                            <td>
+                                {{user.state}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                City: 
+                            </th>
+                            <td>
+                                {{user.city}}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>
+                                Address: 
+                            </th>
+                            <td>
+                               {{user.address}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                D.O.B: 
+                            </th>
+                            <td>
+                                {{user.dateOfBirth}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                NID: 
+                            </th>
+                            <td>
+                                {{user.nid}}
+                            </td>
+                        </tr>
+
+                    
+                </table>
+                
+
+            </div>
+
+        </div>
+
+        <div id="candidate-list">
+            <h2>Available Position For Vote</h2>
+<table class="position-table">
+
+    {% for i in current_vote.position_set.all %}
+        <tr class="position-row">
+            <th>{{i.name}}</th>
+
+            {% if i|is_possible_to_be_candidate:user %}
+            <td>
+                <button style="background-color:crimson; width:170px;" onclick="window.location.href='/vote/become_candidate/{{i.id}}';">Become A Candidate</button>
+            </td>
+            {% endif %}
+
+
+
+           {% if i|is_voted:user %}
+           <td>
+            <button style="background-color:red;">Voted</button>
+           </td>
+
+
+            {% else %}
+
+            {% if i.vote|is_vote_start_or_not:"user" %}
+            <td>
+                <button onclick="window.location.href='/vote/make_vote/{{i.id}}';">Vote</button>
+            </td>
+
+            {% else %}
+            <td>
+                <button style="background-color:red;">Not Available</button>
+            </td>
+            
+            {% endif %}
+
+
+           
+           {% endif %}
+            
+
+        
+
+        </tr>
+        {% endfor %}
+
+</table>
+        </div>
+    </div>
+
+
+    {% endblock content %}

@@ -1,0 +1,111 @@
+{% extends "dashboard-base.html" %}
+
+{% load home_extras %}
+{% block link %}
+
+<title> Quick Vote Result</title>
+
+{% endblock link %}
+
+
+
+
+{% block content %}
+
+<style>
+    .home-content .sales-boxes .recent-sales { 
+    width: 85%;
+    }
+    .delete{
+        background-color: #D11A2A;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        color: white;
+        padding: 4px;
+    }
+    .add{
+      margin-right: 5px;
+      background-color: green;
+      width: 70px;
+      margin-top: 15px;
+      
+    }
+    .edit{
+      margin-right: 5px;
+      width: 68px;
+      background-color: #d1b01a;
+    }
+
+
+    .sales-boxes .sales-details li button a {
+        color: white;
+    } 
+
+    table{
+      width: 70%;
+      border: 1px solid;
+      border-collapse: collapse;
+    }
+
+    th,td{
+      border: 1px solid;
+      padding:5px;
+    }
+</style>
+
+
+
+<div class="home-content">
+    
+      <div class="sales-boxes">
+        <div class="recent-sales box">
+          <div class="title">All Available Vote List</div>
+
+          {% for i in votes %}
+          <div class="sales-details">
+            <h2>{{i.name}}</h2>
+
+            <table>
+
+              {% for candidate in i.candidate_set.all %}
+
+              {% if candidate|which_one_is_win %}
+              <tr style="background-color:green;">
+                <th>{{candidate.position}}</th>
+                <th>{{candidate.user.first_name}} {{candidate.user.last_name}}</th>
+                <th>{{candidate.number_of_vote}}</th>
+              </tr>
+
+              {% else %}
+              <tr>
+                <th>{{candidate.position}}</th>
+                <th>{{candidate.user.first_name}} {{candidate.user.last_name}}</th>
+                <th>{{candidate.number_of_vote}}</th>
+              </tr>
+              
+              {% endif %}
+
+              {% endfor %}
+
+            </table>
+            
+            
+       
+
+            
+            
+            
+
+
+
+
+          </div>
+
+          {% endfor %}
+
+
+        </div>
+    </div>
+  </section>
+
+  {% endblock content %}

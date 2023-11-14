@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+
+
+
+
+{% for i in current_vote %}
+
+<div class="card">
+    <div class="card-header"><a href="/vote/{{i.id}}">{{i.name}}</a></div>
+    <div class="card-body">
+        <div class="left-section">
+            <!-- <ul class="candidate-list">
+                <li class="candidate-list-item">Candidate 1 - Role 1</li>
+                <li class="candidate-list-item">Candidate 2 - Role 2</li>
+ 
+            </ul> -->
+
+            <table class="home-table">
+                <tbody class="home-tbody">
+                   
+
+                    <tr class="home-tr">
+                         <th>Position</th>
+                         <th>Candidates</th>
+                    </tr>
+                    {% for j in i.position_set.all %}
+                    
+                    
+                    <tr class="home-tr">
+                        <td>{{j.name}}</td>
+                        <td>{{j.candidate_set.count}}</td>
+                    </tr>
+          
+                    {% endfor %}
+                </tbody>
+            </table>
+      
+        </div>
+        <div class="right-section">
+            <p>Vote Start : {{i.start}}</p>
+            <p>Vote End : {{i.end}}</p>
+            <p>Total Position : {{i.position_set.count}}</p>
+            <p>Total Candidate : {{i.candidate_set.count}}</p>
+            
+            <!-- Add more information as needed -->
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}

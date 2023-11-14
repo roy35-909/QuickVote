@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awesome Navbar</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 15px;
+            position: relative;
+
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .logo {
+            color: #fff;
+            font-size: 1.5em;
+            text-decoration: none;
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2em;
+        }
+
+        .profile-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #fff;
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+        /* Card styles */
+        .card {
+            width: 90%;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 15px;
+            background-color: rgb(76, 197, 20);
+            color: #fff;
+            font-size: 1.2em;
+            text-align: center;
+        }
+        .card-header a{
+            text-decoration: none;
+            color: #f4f4f4;
+        }
+
+        .card-body {
+            display: flex;
+        }
+
+        .left-section {
+            width: 70%;
+            padding: 20px;
+        }
+
+        .right-section {
+            width: 30%;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .candidate-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .candidate-list-item {
+            margin-bottom: 10px;
+        }
+        .home-table{
+            width: 100%;
+        }
+        .home-tr{
+            font-size: 22px;
+
+        }
+        .home-tr th{
+            border-bottom: 2px dotted black;
+            padding: 5px;
+        }
+        .home-tr td{
+            text-align: center;
+            font-size: 18px;
+            padding: 9px;
+        }
+
+        /* Add media query for responsiveness */
+        @media screen and (max-width: 768px) {
+            .menu {
+                display: none;
+            }
+
+            .profile-icon {
+                margin-left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="#" class="logo">Quick Vote</a>
+        
+        <div class="menu">
+            <a href="/">Home</a>
+
+            {% if user.is_superuser %}
+            <a href="/dashboard">Dashboard</a>
+        {% endif %}
+            {% if user.is_authenticated %}
+
+            <a href="/auth/logout">Logout</a>
+            <a href="#">{{user.first_name}}</a>
+            {% else %}
+            <a href="/auth/login">Login</a>
+            <a href="/auth/registration">Register</a>
+            {% endif %}
+
+
+            <!-- Add more menu items as needed -->
+
+            
+        </div>
+    </div>
+
+
+
+    {% block content %}
+    
+    
+    
+    
+    {% endblock content %}
+
+
+</body>
+</html>

@@ -1,0 +1,382 @@
+{% load static %}
+<html lang="en" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>Multi Step Form | CodingNepal</title>
+      <link rel="stylesheet" href="{%  static 'register.css'%}">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+   </head>
+   <body>
+      <style>
+         body {
+             margin: 0;
+             font-family: 'Arial', sans-serif;
+         }
+   
+         .navbar {
+             background-color: rgba(0, 0, 0, 0.6);
+             padding: 15px;
+             position: fixed;
+             width:100%;
+             top: 0;
+             z-index: 1000;
+             display: flex;
+             justify-content: space-between;
+         }
+   
+         .logo {
+             color: #fff;
+             font-size: 1.5em;
+             text-decoration: none;
+         }
+   
+         .menu {
+             display: flex;
+             align-items: center;
+         }
+   
+         .menu a {
+             color: #fff;
+             text-decoration: none;
+             margin: 0 15px;
+             font-size: 1.2em;
+         }
+   
+         .profile-icon {
+             width: 30px;
+             height: 30px;
+             border-radius: 50%;
+             background-color: #fff;
+             margin-left: 15px;
+             cursor: pointer;
+         }
+   
+         /* Card styles */
+         .card {
+             width: 90%;
+             margin: 20px auto;
+             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+             background-color: #fff;
+             border-radius: 8px;
+             overflow: hidden;
+         }
+   
+         .card-header {
+             padding: 15px;
+             background-color: rgb(76, 197, 20);
+             color: #fff;
+             font-size: 1.2em;
+             text-align: center;
+         }
+         .card-header a{
+             text-decoration: none;
+             color: #f4f4f4;
+         }
+   
+         .card-body {
+             display: flex;
+         }
+   
+         .left-section {
+             width: 70%;
+             padding: 20px;
+         }
+   
+         .right-section {
+             width: 30%;
+             padding: 20px;
+             background-color: #f4f4f4;
+         }
+   
+         .candidate-list {
+             list-style: none;
+             padding: 0;
+             margin: 0;
+         }
+   
+         .candidate-list-item {
+             margin-bottom: 10px;
+         }
+         .home-table{
+             width: 100%;
+         }
+         .home-tr{
+             font-size: 22px;
+   
+         }
+         .home-tr th{
+             border-bottom: 2px dotted black;
+             padding: 5px;
+         }
+         .home-tr td{
+             text-align: center;
+             font-size: 18px;
+             padding: 9px;
+         }
+   
+         /* Add media query for responsiveness */
+         @media screen and (max-width: 768px) {
+             .menu {
+                 display: none;
+             }
+   
+             .profile-icon {
+                 margin-left: auto;
+             }
+         }
+     </style>
+
+      <div class="navbar">
+         <a href="#" class="logo">Quick Vote</a>
+         
+         <div class="menu">
+             <a href="/">Home</a>
+   
+             {% if user.is_superuser %}
+             <a href="/dashboard">Dashboard</a>
+         {% endif %}
+             {% if user.is_authenticated %}
+   
+             <a href="/auth/logout">Logout</a>
+             <a href="#">{{user.first_name}}</a>
+             {% else %}
+             <a href="/auth/login">Login</a>
+             <a href="/auth/registration">Register</a>
+             {% endif %}
+   
+   
+             <!-- Add more menu items as needed -->
+   
+             
+         </div>
+     </div>
+      <div class="container">
+         <header>Signup Form</header>
+         <div class="progress-bar">
+            <div class="step">
+               <p>
+                  Name
+               </p>
+               <div class="bullet">
+                  <span>1</span>
+               </div>
+               <div class="check fas fa-check"></div>
+            </div>
+            <div class="step">
+               <p>
+                  Info
+               </p>
+               <div class="bullet">
+                  <span>2</span>
+               </div>
+               <div class="check fas fa-check"></div>
+            </div>
+            <div class="step">
+               <p>
+                  User
+               </p>
+               <div class="bullet">
+                  <span>3</span>
+               </div>
+               <div class="check fas fa-check"></div>
+            </div>
+            <div class="step">
+               <p>
+                  Biometric
+               </p>
+               <div class="bullet">
+                  <span>4</span>
+               </div>
+               <div class="check fas fa-check"></div>
+            </div>
+         </div>
+         <div class="form-outer">
+            <form action="/auth/registration" method = "POST">
+               {% csrf_token %}
+               <div class="page slide-page">
+                  <div class="title">
+                     Basic Info:
+                  </div>
+                  <div class="field">
+                     <div class="label">
+                        First Name
+                     </div>
+                     <input type="text" name="first_name">
+                  </div>
+                  <div class="field">
+                     <div class="label">
+                        Last Name
+                     </div>
+                     <input type="text" name="last_name">
+                  </div>
+                  <div class="field">
+                     <button class="firstNext next">Next</button>
+                  </div>
+               </div>
+               <div class="page">
+                  <div class="title">
+                     Contact Info:
+                  </div>
+                  <div class="field">
+                     <div class="label">
+                        Email Address
+                     </div>
+                     <input type="email" name="email" placeholder="Email.. ">
+                  </div>
+                  <div class="field">
+                     <div class="label">
+                        NID Number
+                     </div>
+                     <input type="Number" name="nid">
+                  </div>
+                  <div class="field btns">
+                     <button class="prev-1 prev">Previous</button>
+                     <button class="next-1 next">Next</button>
+                  </div>
+               </div>
+               <div class="page">
+                  <div class="title">
+                     User Information
+                  </div>
+                  <div class="field">
+                     <div class="label">
+                        Phone
+                     </div>
+                     <input type="text"  name="phone" placeholder="01.........">
+                  </div>
+                  <div class="field">
+                     <div class="label">
+                        Password
+                     </div>
+                     <input type="password" name = "password">
+                  </div>
+                  <div class="field btns">
+                     <button class="prev-2 prev">Previous</button>
+                     <button class="next-2 next" onclick= "activate_finger()">Next</button>
+                  </div>
+               </div>
+               <div class="page">
+                  <div class="title">
+                     Biometric Registration 
+                     <div class="img_container">
+                        <img src="{% static 'scan.gif' %}" alt="" class="scan_gif">
+                        <input type="text" value={{fid}} class="fid" name="fid" id="fid">
+                     </div>
+                     
+                  </div>
+
+                  <style>
+                     .fid{
+                        display: none;
+                     }
+                     .scan_gif {
+                        height: 70px;
+                        width: 65px;
+                        border-radius: 10px;
+                        display: flex;
+                        align-items: center;
+                        text-align: center;
+                     }
+                     .img_container{
+                        padding-left: 120px;
+                     }
+                  </style>
+
+                  <div class="field">
+                     <div class="label">
+                        Status : <span id="status"> Scan Your Finger</span>
+                     </div>
+
+                  </div>
+
+
+
+
+
+
+                  <div class="field btns">
+                     <button class="prev-3 prev">Previous</button>
+                     <button class="submit">Submit</button>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+      <script>
+            // API for get requests 
+
+
+      function activate_finger(){
+
+         let fid = document.getElementById('fid')
+         fid = parseInt(fid.value)
+   
+         let fetchRes = fetch( 
+         "http://localhost:8000/auth/registration/"+fid); 
+         // fetchRes is the promise to resolve 
+         // it by using.then() method 
+         fetchRes.then(res => 
+             res.json()).then(d => { 
+                 console.log(d.msg) 
+                 let tag = document.getElementById("status");
+
+                 tag.textContent = d.msg
+             }) 
+
+      }
+
+      </script>
+      
+      <script type="module">
+         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js'
+         // Add Firebase products that you want to use
+         import { getAuth } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js'
+         import { getFirestore,collection, getDocs,onSnapshot,doc } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js'
+
+         const firebaseConfig = {
+            "type": "service_account",
+            "projectId": "fingerprint-adec5",
+            "private_key_id": "8df7ad8ca4d9718ef024e3da81f8930e63ac422f",
+            "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDX8Cehh/qi5VMm\nnxowwWIr/ItOXXlS9dphdxXCWIzslB1/flceK+ZXu05KBqgfi9OF547y52LoBm+/\nWrHZPLwgFrl79EJZ7Cj8Fuo6Za7QRZpGRdiEQvx6RPtEgr5FinAgwd4a4n9vhAxG\n3CZQJR+c9pmVjs2FJcbPtpJnFJy9nYDPJ7GoNPcjoTZVF/8KKLhhCucx5o7Ne/Iv\nuQRNyjSXCTeomBfQFey4bAC9u1Hc8mVMFawxBZUPanskImzzuPtDTIPt+UwY+mKX\n5tb/rCfS62pWWunEUszdhy7BkRC7KmD2RMV0qOgfCqslQEPzjhuaOTp7ssF/+TgU\nm05gOau/AgMBAAECggEALNeMy1ELHc/ElDUfAbfu9JZ1sVjc7HrslifeJ2UvIqPh\nekvYuIXCSD6308yNFjv5uYlsGIovcmJ/yzuAyk1//aPqcdC4BKdznWH+0xCxnEOP\n9X7kpxaoCpYPndsOuy8z+MF5p5iYgSZpTD/EXwlOhtB49WNZz4gYQKM3xNs1b3SH\nj7BjVTmiejoUJTFeO1MtogIrs4UF72tkYN4Jlf3I2mfXTawlIcaCiVAqAu92/sUE\nONDgtvX7YW00FYeckiOxu0ApQycKeyJ/VAelWZAINRRMWYOeR6FyHhKiCD9+BjjR\ntXYhqtlz511vtx7WnRjnsnsTG0/2E3D1ZkOgGIve+QKBgQDxSUae+W4xfSdu8pv+\n+DJwZ2qV5Wtw55+XP3y7iYAt+zQNyOzhByxwDaooQtSJGRtNzIOCZ9h/YY9qfIpm\nfMPoRXiLymF0JcKxWk5aCepSuQ/8lH4YUkcMT4pZVnX4F7o5Kt/m+pc3xjlVWD0j\n0uml5xShAmjcGPmZMXRv0RuL+QKBgQDlGys2tj6qaltMjDlw7cqV3YvINua0IzbP\nDNHH2835ZnbE487dBeu/ba0VDpxL4N+ynKjKovMfmnODf0K8r4PilYHyQ6i9/3HY\naajTxBmWVCGyP9rsE4nLwYEsFICZ9LFJqEcspzY2wCfVTlUnOGF61lAzSdj6vDMU\nWDfDhBEzdwKBgQDOlh6RHp7qYG3S4IYP2BHXi7QGg1dqY+aQaRsytpe4xsvawZ2P\nTcUOa6S0tAOlHonyIpi2npMO/Uj9s4QMG+bgiBqeFbk66Nm5X8iV7sdh7HFzoPAV\ngtyx/ahGtXBr6mTXbY4nBYdTibStDc/LTFogYamX8ag2Smvqbh1zX2ZmgQKBgQCV\nDTjvDl/0pN8jDPNt6fZry8feCQHM3kARMkjk2rbFdAj/DSqPFwQJ9YOueGPs5a8D\nV/JkauD7hZNzUH8NnK6T4iq5f5Uvjxn07sC8jQ8Mg02s1uhJwGhcnFa6Y9hK0Svq\nPMWZYmvd8OO5XY3+xyp8LSPeSkQU1A3zRXV6CNjb/wKBgDMlC9CXLxv2I/ZuJ2hH\ntI5Vn6IYTOqWl+t3z6hKPbWTrrfjM4BCLKsZUfP7zSZfoI64YPgW7lYk0Ewv0Epn\nli7YX43GKxM+xT7avd6dRg22ZvzpQYyYfkPd4oLe+0hoxFoc/dLhG9bTX0RqIOgQ\n/nhHTX5etJStHquKbJQugt8R\n-----END PRIVATE KEY-----\n",
+            "client_email": "firebase-adminsdk-lrcvf@fingerprint-adec5.iam.gserviceaccount.com",
+            "client_id": "118130657571713190152",
+            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+            "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-lrcvf%40fingerprint-adec5.iam.gserviceaccount.com",
+            "universe_domain": "googleapis.com"
+          };
+      
+          // Initialize Firebase
+
+
+
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+
+
+            {% comment %} async function checkDatabaseData(db) {
+               const querySnapshot = await getDocs(collection(db, "Register"));
+               querySnapshot.forEach((doc) => {
+               console.log(`${doc.id} => ${doc}`);
+
+               console.log(doc.data())
+               });
+             }
+
+             
+             checkDatabaseData(db); {% endcomment %}
+
+             const unsub = onSnapshot(doc(db, "Register", "register"), (doc) => {
+               console.log("Current data: ", doc.data());
+               let tag = document.getElementById("status");
+
+               tag.textContent = doc.data().fingerprint_status
+           });
+
+
+
+       </script>
+      <script src="{%  static 'register.js'%}"></script>
+   </body>
+</html>

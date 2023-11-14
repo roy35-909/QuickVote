@@ -1,0 +1,112 @@
+{% extends "dashboard-base.html" %}
+
+{% load home_extras %}
+{% block link %}
+
+<title> Quick Park System Areas </title>
+
+{% endblock link %}
+
+
+
+
+{% block content %}
+
+<style>
+    .home-content .sales-boxes .recent-sales { 
+    width: 85%;
+    }
+    .delete{
+        background-color: #D11A2A;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        color: white;
+        padding: 4px;
+    }
+    .add{
+      margin-right: 5px;
+      background-color: green;
+      width: 70px;
+      margin-top: 15px;
+      
+    }
+    .edit{
+      margin-right: 5px;
+      width: 68px;
+      background-color: #d1b01a;
+    }
+
+
+    .sales-boxes .sales-details li button a {
+        color: white;
+    } 
+</style>
+
+
+
+<div class="home-content">
+    
+      <div class="sales-boxes">
+        <div class="recent-sales box">
+          <div class="title">All Available Vote List</div>
+          <div class="sales-details">
+            
+            
+            <ul class="details">
+              <li class="topic">Vote Name</li>
+              {% for i in vote %}
+              <li><a href="#">{{i.name}}</a></li>
+              {% endfor %}
+            </ul>
+
+            <ul class="details">
+              <li class="topic">Total Position</li>
+              {% for i in vote %}
+              <li><a href="#">{{i.position_set.count}}</a></li>
+              {% endfor %}
+            </ul>
+            
+            <ul class="details">
+                <li class="topic">Total Candidate</li>
+                {% for i in vote %}
+                <li><a href="#">{{i.candidate_set.count}}</a></li>
+                {% endfor %}
+              </ul>
+            
+            
+            
+
+
+            
+            
+            <ul class="details">
+              <li class="topic">Action </li>
+              {% for i in vote %}
+              
+              <li>
+                {% if i|is_vote_start_or_not:"user" %}
+                <button class="delete edit"><a href="/dashboard/vote/make_done/{{i.id}}">Stop</a></button>
+                {% else %}
+                <button class="delete add"><a href="/dashboard/vote/make_start/{{i.id}}">Start</a></button>
+                <button class="delete"><a href="/dashboard/vote/make_delete/{{i.id}}">Delete</a></button>
+                {% endif %}
+                
+            </li>
+              {% endfor %}
+             
+            </ul>
+       
+            
+            
+            
+            
+
+
+
+
+          </div>
+        </div>
+    </div>
+  </section>
+
+  {% endblock content %}
